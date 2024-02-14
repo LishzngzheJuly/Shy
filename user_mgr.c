@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>  
 #include "user_mgr.h"
 #include "md5.h"
 
@@ -36,7 +37,9 @@ int check_user_name(const char* uname)
 void create_user(void)
 {
     user_info ui;
-    char password[51];
+   // char password[51];
+   char* password;
+    int i = 0;
 
     while(1)
     {
@@ -49,8 +52,22 @@ void create_user(void)
         printf("\n用户名已存在，请重新输入！\n");
     }
 
-    printf("\n密码：");
-    scanf("%s", password);  // 密码输入应该无回显或回显圆点等其他符号，防止旁边的人偷窥
+   	//printf("\n密码：");
+   
+	password = getpass("请输入一个6位数的密码:");
+ 	                        			// 密码输入应该无回显或回显圆点等其他符号，防止旁边的人偷窥
+
+    if (password != NULL) 
+    {
+        							// 在这里处理密码，比如进行验证
+        							// 注意：不应该直接打印密码，因为这会导致安全风险
+        printf("\n你输入的密码长度是: %zu\n", strlen(password));
+    }
+    else 
+    {
+        perror("getpass");
+        return;
+    }
     getchar();
 
     printf("\n性别：");
