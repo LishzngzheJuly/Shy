@@ -289,3 +289,20 @@ void traverse(list l, int(*visit)(elem_type*))
 		p = p->next;
 	}
 }
+
+
+void traverse_fuzzy(list l, int(*visit)(elem_type*, char*, char*))
+{
+	char f_name[20];
+	char f_factor[20];
+        node* p = l->head->next;
+
+        while(p != NULL)
+        {
+                // 如果某次调用访问函数返回值为 0，就停止继续遍历链表
+                if(!visit(&(p->data), f_name, f_factor)) break;
+
+                p = p->next;
+        }
+}
+

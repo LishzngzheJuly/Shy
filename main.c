@@ -174,6 +174,9 @@ void update_goods(void)
                 printf("请输入商品数量：");
                 scanf("%d", &pg->num);
 
+                printf("请输入商品厂家：");
+                scanf("%s", pg->factor);
+
                 printf("请输入商品余量：");
                 scanf("%d", &pg->allow);
 
@@ -189,10 +192,16 @@ void update_goods(void)
 }
 
 
-void show_goods(struct goods* g)
+int show_goods(struct goods* g)
 {
 	if(!g->is_delete)
+	{
+	
 		printf("%d %s %g\n", g->gid, g->name, g->price);
+		return 1;
+	}
+
+	return 0;
 }
 
 

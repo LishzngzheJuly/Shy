@@ -7,10 +7,13 @@
 
 typedef struct goods
 {
-        int gid;
-        char name[50];
-        float price;
+        int gid;         // 商品id
+        char name[50];   // 商品名字
+        float price;     // 商品价格
 	int is_delete;  // 1 表示已删除，0 表示正常
+	int num;        // 商品总量
+	int allow;      // 商品库存
+	char factor[21];//商品厂家
         //...
 
 } elem_type;
@@ -49,6 +52,8 @@ elem_type* at(list l, int pos);
 elem_type* find(list l, int gid, int* pos);
 void reverse(list l);
 void traverse(list l, int(*visit)(elem_type*));
+void traverse_fuzzy(list l, int(*visit)(elem_type*, char*, char*));
+
 
 
 

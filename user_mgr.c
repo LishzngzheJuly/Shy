@@ -4,7 +4,11 @@
 #include <unistd.h>  
 #include "user_mgr.h"
 #include "md5.h"
+#include "goods_list.h"
 
+
+int show_fuzzy_goods(struct goods* g, char* name, char* factor);
+void search_fuzzy_goods(void);
 
 
 // 判断用户名是否存在
@@ -149,4 +153,27 @@ void login_auth(void)
 }
 
 
+void search_fuzzy_goods(void)
+{
+	char f_name[20];
+	int f_id;
+
+        printf("请输入商品名称：");
+        scanf("%s", f_name);
+        getchar();
+        printf("请输入商品id：");
+        scanf("%d", &f_id);
+
+        traverse_fuzzy(gl, show_fuzzy_goods);
+}
+
+
+int show_fuzzy_goods(struct goods* g, char* name, char* factor)
+{
+
+        if(!g->is_delete && strstr(g->name, name) != NULL && strstr(g->factor, factor) != NULL)
+                printf("%d %s %g %d %d\n", g->gid, g->name, g->price , g->num, g->allow);
+                return 1;
+        return 0;
+}
 
