@@ -15,15 +15,6 @@ void search_goods(void);
 
 int main(int argc, char** argv)
 {
-	/*
-	// 测试 MD5 模块
-	char digest[33];
-
-	//md5_string(argv[1], digest);
-	md5_file(argv[1], digest);
-	
-	printf("%s\n", digest);
-	*/
 	
 	if(access(USER_INFO_FILE, R_OK) == 0)
 	{
@@ -155,25 +146,45 @@ void delete_goods(void)
 		printf("\n删除商品成功！\n");
 	}
 
-	
-	// struct goods g;
-	// memset(&g, 0, sizeof(g));
-	// fseek(?);
-	// fwrite(&g, sizeof(g), 1, fp);
-
-	// if(remove2(gl, gid))
-	// {
-	// 	printf("\n删除商品成功！\n");
-	// }
-	// else
-	// {
-	// 	printf("\n商品不存在，删除失败！\n");
-	// }
 }
 
 
 void update_goods(void)
 {
+        int gid;
+
+        printf("\n请输入要修改商品的ID：");
+        scanf("%d", &gid);
+
+        int pos;
+        struct goods* pg = find(gl, gid, &pos);
+
+        if(pg == NULL)
+        {
+                printf("\n商品不存在，删除失败！\n");
+        }
+        else
+        {
+                printf("请输入商品名称：");
+                scanf("%s", pg->name);
+
+                printf("请输入商品价格：");
+                scanf("%f", &pg->price);
+
+                printf("请输入商品数量：");
+                scanf("%d", &pg->num);
+
+                printf("请输入商品余量：");
+                scanf("%d", &pg->allow);
+
+                // 在文件中删除相应的商品信息
+                FILE* fp = fopen(GOODS_INFO_FILE, "r+b");
+                fseek(fp, pos * sizeof(struct goods), SEEK_SET);
+                fwrite(pg, sizeof(struct goods), 1, fp);
+                fclose(fp);
+
+                printf("\n修改商品信息成功！\n");
+        }
 
 }
 
