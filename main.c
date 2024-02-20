@@ -13,6 +13,8 @@ void update_goods(void);
 void search_goods(void);
 
 
+
+
 int main(int argc, char** argv)
 {
 	
