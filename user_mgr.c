@@ -113,15 +113,30 @@ void create_user(void)
 // 登录验证
 void login_auth(void)
 {
+    char* password;	
     char uname[51], upass[51], upass_md5[33];
 
     printf("\n请登录。\n");
     printf("用户名：");
     scanf("%s", uname);
-    printf("密码：");
-    scanf("%s", upass);
+ //   printf("密码：");
+//    scanf("%s", upass);
+    password = getpass("请输入用户密码(6位):");
+                                                        // 密码输入应该无回显或回显圆点等其他符号，防止旁边的人偷窥
+    if (password != NULL)
+    {
+                                                                // 在这里处理密码，比如进行验证
+                                                                // 注意：不应该直接打印密码，因为这会导致安全风险
+        printf("\n你输入的密码长度是: %zu\n", strlen(password));
+    }
+    else
+    {
+        perror("getpass");
+        return;
+    }
+    getchar();
 
-    md5_string(upass, upass_md5);
+    md5_string(password, upass_md5);
 
     FILE* fp = fopen(USER_INFO_FILE, "rb");
 
